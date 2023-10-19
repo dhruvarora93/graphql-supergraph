@@ -22,7 +22,7 @@ router.get("/posts/:threadId", async (ctx) => {
 
 app
   .use(async (ctx, next) => {
-    console.log(`${ctx.method} ${ctx.url}..Users is running!!`);
+    console.log(`${ctx.method} ${ctx.url}..Posts is running!!`);
     await next();
   })
   .use(router.routes())
