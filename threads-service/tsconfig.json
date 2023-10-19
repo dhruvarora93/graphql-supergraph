@@ -1,0 +1,12 @@
+{
+  "extends": "@tsconfig/node-lts/tsconfig.json",
+  "compilerOptions": {
+    "module": "nodenext",
+    "esModuleInterop": true,
+    "target": "es6",
+    "sourceMap": true,
+    "noImplicitAny": true
+  },
+  "lib": ["es2023"],
+  "exclude": ["node_modules"]
+}
