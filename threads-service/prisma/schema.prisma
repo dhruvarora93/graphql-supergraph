@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:postgrespassword@localhost:8432"
+  url      = env("DATABASE_URL")
 }
 
 model threads {
