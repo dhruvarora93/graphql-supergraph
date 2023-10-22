@@ -20,7 +20,6 @@ module.exports = (env = {}) => {
       extensions: [".ts", ".js"],
       modules: ["node_modules", "package.json"],
     },
-    watch: true,
     plugins: [],
   };
 
