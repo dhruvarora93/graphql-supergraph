@@ -1,0 +1,25 @@
+type Query {
+  fetchPosts(
+    limit: Int!,
+    threadId: Int!
+  ): [Posts]
+}
+
+type Query {
+  threads(
+    limit: Int!
+  ): [ResponseData]
+}
+
+type Threads {
+  id: Int!
+}
+
+type Posts {
+  id: Int!
+}
+
+type ResponseData {
+  id: Int!
+}
+

@@ -1,0 +1,40 @@
+actions:
+  - name: fetchPosts
+    definition:
+      kind: ""
+      handler: http://host.docker.internal:8002/posts/
+      request_transform:
+        method: GET
+        query_params:
+          limit: '{{$body.input.limit}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        url: '{{$base_url}}{{$body.input.threadId}}'
+        version: 2
+    comment: fetch posts
+  - name: threads
+    definition:
+      kind: ""
+      handler: http://host.docker.internal:8001/threads/
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        url: '{{$base_url}}{{$body.input.limit}}'
+        version: 2
+    comment: fetch threads
+custom_types:
+  enums: []
+  input_objects:
+  objects:
+    - name: Threads
+    - name: Posts
+    - name: ResponseData
+  scalars: []
