@@ -1,6 +1,6 @@
 - name: child-graph
   definition:
-    url: http://host.docker.internal:8083/v1/graphql
+    url: http://host.docker.internal:8003/v1/graphql
     timeout_seconds: 60
     customization: {}
   comment: Child server talking to REST services
