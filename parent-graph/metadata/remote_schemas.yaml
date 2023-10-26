@@ -1,0 +1,19 @@
+- name: child-graph
+  definition:
+    url: http://host.docker.internal:8083/v1/graphql
+    timeout_seconds: 60
+    customization: {}
+  comment: Child server talking to REST services
+  remote_relationships:
+    - relationships:
+        - definition:
+            to_remote_schema:
+              lhs_fields:
+                - id
+              remote_field:
+                fetchPosts:
+                  arguments:
+                    threadId: $id
+              remote_schema: child-graph
+          name: posts
+      type_name: ResponseData
