@@ -5,6 +5,6 @@ COPY . .
 RUN yarn add typescript
 RUN yarn install && yarn build 
 
-EXPOSE 8002
+EXPOSE 8001
 CMD ["node", "./dist/main.js"]
 
