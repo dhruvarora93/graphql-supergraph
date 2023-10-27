@@ -20,19 +20,16 @@ services:
     environment:
       POSTGRES_PASSWORD: postgrespassword
   child:
-    image: hasura/graphql-engine:v2.33.0
+    image: hasura/graphql-engine:v2.33.0.cli-migrations-v3
     ports: ['8003:8080']
     restart: always
     environment:
-      ## postgres database to store Hasura metadata
       HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:postgrespassword@child-metadata:5432/postgres
-      ## this env var can be used to add the above postgres database to Hasura as a data source. this can be removed/updated based on your needs
-      PG_DATABASE_URL: postgres://postgres:postgrespassword@child-metadata:5432/postgres
-      ## enable the console served by server
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "false" # set to "false" to disable console
-      ## enable debugging mode. It is recommended to disable this in production
-      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+      HASURA_GRAPHQL_DEV_MODE: "false"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+    volumes:
+      - ./child-graph/metadata:/hasura-metadata
   parent-metadata:
     image: postgres:15
     restart: always
@@ -41,19 +38,19 @@ services:
     environment:
       POSTGRES_PASSWORD: postgrespassword
   parent:
-    image: hasura/graphql-engine:v2.33.0
+    image: hasura/graphql-engine:v2.33.0.cli-migrations-v3
     ports: ['8080:8080']
     restart: always
+    depends_on: 
+      - child
     environment:
-      ## postgres database to store Hasura metadata
       HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:postgrespassword@parent-metadata:5432/postgres
-      ## this env var can be used to add the above postgres database to Hasura as a data source. this can be removed/updated based on your needs
-      PG_DATABASE_URL: postgres://postgres:postgrespassword@parent-metadata:5432/postgres
-      ## enable the console served by server
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "false" # set to "false" to disable console
-      ## enable debugging mode. It is recommended to disable this in production
-      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+      HASURA_GRAPHQL_DEV_MODE: "false"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+    volumes:
+      - ./parent-graph/metadata:/hasura-metadata
+      - ./parent-graph/config.yaml:/hasura-metadata/config.yaml
 
 volumes:
   db_data:
