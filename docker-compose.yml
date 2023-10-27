@@ -6,12 +6,16 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:postgrespassword@host.docker.internal:8432/postgres 
     ports: ['8001:8001']
+    extra_hosts:
+      - host.docker.internal:host-gateway
   posts:
     build: 
       context: posts-service
     environment:
       DATABASE_URL: postgres://postgres:postgrespassword@host.docker.internal:7432/postgres 
     ports: ['8002:8002']
+    extra_hosts:
+      - host.docker.internal:host-gateway
   child-metadata:
     image: postgres:15
     restart: always
@@ -19,6 +23,8 @@ services:
       - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgrespassword
+    extra_hosts:
+      - host.docker.internal:host-gateway
   child:
     image: hasura/graphql-engine:v2.33.0.cli-migrations-v3
     ports: ['8003:8080']
@@ -30,6 +36,8 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
     volumes:
       - ./child-graph/metadata:/hasura-metadata
+    extra_hosts:
+      - host.docker.internal:host-gateway
   parent-metadata:
     image: postgres:15
     restart: always
@@ -37,6 +45,8 @@ services:
       - db1_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgrespassword
+    extra_hosts:
+      - host.docker.internal:host-gateway
   parent:
     image: hasura/graphql-engine:v2.33.0.cli-migrations-v3
     ports: ['8080:8080']
@@ -50,9 +60,9 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
     volumes:
       - ./parent-graph/metadata:/hasura-metadata
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
 volumes:
   db_data:
   db1_data:
-
- 
