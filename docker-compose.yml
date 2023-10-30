@@ -49,7 +49,7 @@ services:
       - host.docker.internal:host-gateway
   parent:
     image: hasura/graphql-engine:v2.33.0.cli-migrations-v3
-    ports: ['8080:8080']
+    ports: ['8000:8080']
     restart: always
     depends_on: 
       - child
