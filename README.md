@@ -1,7 +1,7 @@
 # graphql-supergraph
 GraphQL gateway for threads and users
 
-Run `docker-compose up` in the root folder. Make a sample graphQL query at `http://localhost:8080/v1/graphql`.
+Run `docker-compose up` in the root folder. Make a sample graphQL query at `http://localhost:8000/v1/graphql`.
 
 Sample Query
 ```
